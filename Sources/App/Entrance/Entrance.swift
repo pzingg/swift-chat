@@ -1,20 +1,23 @@
-import SwiftUI
-import ComposableArchitecture
+import GtkBackend
+import SwiftCrossUI
+// PFZ
+// import SwiftUI
+// import ComposableArchitecture
 import API
 
 @Reducer
 public struct Entrance: Reducer {
-  
+
   @Dependency(\.client) var client
-  
+
   @ObservableState
   public struct State {
-    
+
     enum Navigation: Equatable, Identifiable {
       enum SheetRoute: Equatable, Identifiable {
         case createUser
         case createRoom
-        
+
         public var id: String {
           switch self {
           case .createUser: "createUser"
@@ -22,20 +25,20 @@ public struct Entrance: Reducer {
           }
         }
       }
-      
+
       enum PopoverRoute: Equatable, Identifiable {
         case error(String)
-        
+
         public var id: String {
           switch self {
           case .error(let description): description
           }
         }
       }
-      
+
       case sheet(SheetRoute)
       case popover(PopoverRoute)
-      
+
       var id: String {
         switch self {
         case .sheet(let route): "sheet_\(route.id)"
@@ -43,7 +46,7 @@ public struct Entrance: Reducer {
         }
       }
     }
-    
+
     @Shared(.fileStorage(.user)) var user: UserPresentation?
 
     @Presents var room: Room.State?
@@ -52,10 +55,10 @@ public struct Entrance: Reducer {
     var query: String = ""
     var rooms: [RoomPresentation] = []
     var isLoading: Bool = false
-      
+
     public init() {}
   }
-  
+
   public enum Action: BindableAction {
     case binding(BindingAction<State>)
     case onAppear
@@ -69,11 +72,11 @@ public struct Entrance: Reducer {
     case didSearchRoom(Result<[RoomPresentation], any Error>)
     case room(PresentationAction<Room.Action>)
   }
-  
+
   enum CancellationId: Hashable {
     case searchRoom
   }
-  
+
   public var body: some Reducer<State, Action> {
     BindingReducer()
     Reduce { state, action in
@@ -179,7 +182,7 @@ public struct Entrance: Reducer {
       Room()
     }
   }
-  
+
   public init() {}
 }
 

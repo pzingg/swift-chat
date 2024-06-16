@@ -1,17 +1,20 @@
-import SwiftUI
-import ComposableArchitecture
+import GtkBackend
+import SwiftCrossUI
+// PFZ
+// import SwiftUI
+// import ComposableArchitecture
 import Foundation
 
 // MARK: - Feature view
 
 public struct RoomView: View {
-  
+
   @Bindable var store: StoreOf<Room>
-  
+
   public init(store: StoreOf<Room>) {
     self.store = store
   }
-  
+
   public var body: some View {
     VStack(spacing: 0) {
       ScrollViewReader { reader in
@@ -76,9 +79,9 @@ public struct RoomView: View {
 }
 
 struct UserMessage: View {
-  
+
   let message: String
-  
+
   var body: some View {
     HStack {
       Spacer()
@@ -103,10 +106,10 @@ struct UserMessage: View {
 }
 
 struct OtherUsersMessage: View {
-  
+
   let name: String
   let message: String
-  
+
   var body: some View {
     HStack {
       VStack(alignment: .leading, spacing: 2) {
@@ -136,9 +139,9 @@ struct OtherUsersMessage: View {
 }
 
 struct MessageToSend: View {
-  
+
   let message: String
-  
+
   var body: some View {
     HStack {
       Spacer()
@@ -164,11 +167,11 @@ struct MessageToSend: View {
 }
 
 struct MessageField: View {
-  
+
   @Binding var message: String
   let isSending: Bool
   let send: () -> ()
-  
+
   var body: some View {
     HStack {
       TextField(

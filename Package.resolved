@@ -64,12 +64,29 @@
       }
     },
     {
+      "identity" : "opencombine",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/OpenCombine/OpenCombine.git",
+      "state" : {
+        "revision" : "8576f0d579b27020beccbccc3ea6844f3ddfc2c2",
+        "version" : "0.14.0"
+      }
+    },
+    {
       "identity" : "postgres-nio",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/vapor/postgres-nio.git",
       "state" : {
         "revision" : "69ccfdf4c80144d845e3b439961b7ec6cd7ae33f",
         "version" : "1.20.2"
+      }
+    },
+    {
+      "identity" : "qlift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Longhanks/qlift",
+      "state" : {
+        "revision" : "ddab1f1ecc113ad4f8e05d2999c2734cdf706210"
       }
     },
     {
@@ -118,21 +135,12 @@
       }
     },
     {
-      "identity" : "swift-case-paths",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/pointfreeco/swift-case-paths",
-      "state" : {
-        "revision" : "8d712376c99fc0267aa0e41fea732babe365270a",
-        "version" : "1.3.3"
-      }
-    },
-    {
       "identity" : "swift-clocks",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/pointfreeco/swift-clocks",
       "state" : {
-        "revision" : "d1fd837326aa719bee979bdde1f53cd5797443eb",
-        "version" : "1.0.0"
+        "revision" : "a8421d68068d8f45fbceb418fbf22c5dad4afd33",
+        "version" : "1.0.2"
       }
     },
     {
@@ -154,21 +162,21 @@
       }
     },
     {
-      "identity" : "swift-composable-architecture",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/pointfreeco/swift-composable-architecture.git",
-      "state" : {
-        "revision" : "433a23118f739078644ebeb4009e23d307af694a",
-        "version" : "1.10.4"
-      }
-    },
-    {
       "identity" : "swift-concurrency-extras",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/pointfreeco/swift-concurrency-extras",
       "state" : {
         "revision" : "bb5059bde9022d69ac516803f4f227d8ac967f71",
         "version" : "1.1.0"
+      }
+    },
+    {
+      "identity" : "swift-cross-ui",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/pzingg/swift-cross-ui.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "6f444975e668bb4ee3610422c79dcb147be15e8e"
       }
     },
     {
@@ -181,21 +189,21 @@
       }
     },
     {
-      "identity" : "swift-custom-dump",
+      "identity" : "swift-cwinrt",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/pointfreeco/swift-custom-dump",
+      "location" : "https://github.com/thebrowsercompany/swift-cwinrt",
       "state" : {
-        "revision" : "f01efb26f3a192a0e88dcdb7c3c391ec2fc25d9c",
-        "version" : "1.3.0"
+        "branch" : "main",
+        "revision" : "ad451d31fc7c1c60041c146d177cdaf5aaf1cf47"
       }
     },
     {
       "identity" : "swift-dependencies",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/pointfreeco/swift-dependencies",
+      "location" : "https://github.com/pointfreeco/swift-dependencies.git",
       "state" : {
-        "revision" : "350e1e119babe8525f9bd155b76640a5de270184",
-        "version" : "1.3.0"
+        "revision" : "00bc30ca03f98881329fab7f1bebef8eba472596",
+        "version" : "1.3.1"
       }
     },
     {
@@ -226,21 +234,21 @@
       }
     },
     {
-      "identity" : "swift-identified-collections",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/pointfreeco/swift-identified-collections",
-      "state" : {
-        "revision" : "d1e45f3e1eee2c9193f5369fa9d70a6ddad635e8",
-        "version" : "1.0.0"
-      }
-    },
-    {
       "identity" : "swift-log",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-log.git",
       "state" : {
         "revision" : "e97a6fcb1ab07462881ac165fdbb37f067e205d5",
         "version" : "1.5.4"
+      }
+    },
+    {
+      "identity" : "swift-macro-toolkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/stackotter/swift-macro-toolkit",
+      "state" : {
+        "revision" : "687075e7bf976e121d083e922a07c7a9350ca85d",
+        "version" : "0.4.0"
       }
     },
     {
@@ -343,15 +351,6 @@
       }
     },
     {
-      "identity" : "swift-perception",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/pointfreeco/swift-perception",
-      "state" : {
-        "revision" : "8e8ca36c02abc7775a3ab81f9468c0df5fe22c2c",
-        "version" : "1.1.7"
-      }
-    },
-    {
       "identity" : "swift-protobuf",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-protobuf",
@@ -406,12 +405,65 @@
       }
     },
     {
-      "identity" : "swiftui-navigation",
+      "identity" : "swift-uwp",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/pointfreeco/swiftui-navigation",
+      "location" : "https://github.com/thebrowsercompany/swift-uwp",
       "state" : {
-        "revision" : "2ec6c3a15293efff6083966b38439a4004f25565",
-        "version" : "1.3.0"
+        "branch" : "main",
+        "revision" : "cfad0a43469211bf7eb58ed23af3d4a176faec07"
+      }
+    },
+    {
+      "identity" : "swift-windowsappsdk",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/thebrowsercompany/swift-windowsappsdk",
+      "state" : {
+        "branch" : "main",
+        "revision" : "8d094d4478d0eabcf584fef133b8ce45287ecd72"
+      }
+    },
+    {
+      "identity" : "swift-windowsfoundation",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/thebrowsercompany/swift-windowsfoundation",
+      "state" : {
+        "branch" : "main",
+        "revision" : "ba7a8b5000ed3f9f077000d1a31f2a0b19907657"
+      }
+    },
+    {
+      "identity" : "swift-winui",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/thebrowsercompany/swift-winui",
+      "state" : {
+        "branch" : "main",
+        "revision" : "18b3a6a16496d5848aec4587f7fb994f469186c5"
+      }
+    },
+    {
+      "identity" : "swiftterm",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/migueldeicaza/SwiftTerm.git",
+      "state" : {
+        "revision" : "e2b431dbf73f775fb4807a33e4572ffd3dc6933a",
+        "version" : "1.2.5"
+      }
+    },
+    {
+      "identity" : "termkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/stackotter/TermKit",
+      "state" : {
+        "revision" : "163afa64f1257a0c026cc83ed8bc47a5f8fc9704"
+      }
+    },
+    {
+      "identity" : "textbufferkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/migueldeicaza/TextBufferKit.git",
+      "state" : {
+        "revision" : "7f3ed5b1d7288de34ad853544d802647be11cfcf",
+        "version" : "0.3.0"
       }
     },
     {

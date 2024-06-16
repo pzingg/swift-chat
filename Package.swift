@@ -1,5 +1,7 @@
 // swift-tools-version: 5.9
 // The swift-tools-version declares the minimum version of Swift required to build this package.
+// PFZ - Attempting to build with SwiftCrossUI, not using swift-composable-architecture
+// or swift-perception packages
 
 import PackageDescription
 
@@ -27,8 +29,11 @@ var package = Package(
     // Vapor
     .package(url: "https://github.com/vapor/postgres-nio.git", from: "1.18.0"),
     // Pointfree.co
-    .package(url: "https://github.com/pointfreeco/swift-composable-architecture.git", from: "1.10.0"),
+    // PFZ
+    // .package(url: "https://github.com/pointfreeco/swift-composable-architecture.git", from: "1.10.0"),
     .package(url: "https://github.com/pointfreeco/swift-dependencies.git", from: "1.3.0"),
+    // SwiftCrossUI
+    .package(url: "https://github.com/pzingg/swift-cross-ui.git", branch: "main"),
   ],
   targets: [
     .target(
@@ -45,8 +50,11 @@ var package = Package(
     .target(
       name: "App",
       dependencies: [
-        .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
+        // PFZ
+        // .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
         .product(name: "Dependencies", package: "swift-dependencies"),
+        .product(name: "SwiftCrossUI", package: "swift-cross-ui"),
+        .product(name: "GtkBackend", package: "swift-cross-ui"),
         "API",
         "WebSocket",
       ]
@@ -57,6 +65,11 @@ var package = Package(
         "EventSource",
         "VirtualActor",
         .product(name: "DistributedCluster", package: "swift-distributed-actors")
+      ],
+      // PFZ added to eliminate async function pointer to distributed thunk Backend.User.info()
+      // async throws -> Backend.User.Info) is in generated IR file, but not in TBD file
+      swiftSettings: [
+        .unsafeFlags(["-Xfrontend", "-validate-tbd-against-ir=none"])
       ]
     ),
     .target(
@@ -83,6 +96,7 @@ var package = Package(
     .target(
       name: "WebSocket",
       dependencies: [
+        // PFZ - removed SwiftUI dependency in swift-dependencies
         .product(name: "Dependencies", package: "swift-dependencies"),
         .product(name: "Hummingbird", package: "hummingbird"),
         .product(name: "HummingbirdRouter", package: "hummingbird"),
@@ -94,7 +108,8 @@ var package = Package(
       dependencies: [
         .product(name: "EventSourcing", package: "cluster-event-sourcing"),
         .product(name: "ArgumentParser", package: "swift-argument-parser"),
-        .product(name: "Dependencies", package: "swift-dependencies"),
+        // PFZ - removed SwiftUI dependency in swift-dependencies
+        // .product(name: "Dependencies", package: "swift-dependencies"),
         "API",
         "Backend",
         "Persistence",

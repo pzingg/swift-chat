@@ -1,5 +1,7 @@
 import Dependencies
 import Foundation
+// PFZ - new location for URLSessionWebSocketxxx
+import FoundationNetworking
 
 public struct WebSocketClient {
   public struct ID: Hashable, @unchecked Sendable {

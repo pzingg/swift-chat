@@ -1,25 +1,26 @@
-import ComposableArchitecture
 import Dependencies
+// PFZ
+// import ComposableArchitecture
 import Foundation
 import API
 import WebSocket
 
 @Reducer
 public struct Room {
-  
+
   @Dependency(\.continuousClock) var clock
   @Dependency(\.webSocket) var webSocket
-  
+
   @ObservableState
   public struct State {
-    
+
     var alert: AlertState<Action.Alert>?
     var message: String = ""
     var isSending: Bool = false
-    
+
     let room: RoomPresentation
     let user: UserPresentation
-    
+
     var connectivityState = ConnectivityState.disconnected
     var messagesToSend: [Message] = []
     var messagesToSendTexts: [String] {
@@ -32,13 +33,13 @@ public struct Room {
         }
     }
     var receivedMessages: [MessagePresentation] = []
-    
+
     public enum ConnectivityState: String {
       case connected
       case connecting
       case disconnected
     }
-    
+
     public init(
       user: UserPresentation,
       room: RoomPresentation,
@@ -55,9 +56,9 @@ public struct Room {
       self.receivedMessages = receivedMessages
     }
   }
-  
+
   public init() {}
-  
+
   public enum Action: BindableAction {
     case binding(BindingAction<State>)
     case onAppear
@@ -69,10 +70,10 @@ public struct Room {
     case send([Message])
     case didSend(Result<Bool, any Error>)
     case webSocket(WebSocketClient.Action)
-    
+
     public enum Alert: Equatable {}
   }
-  
+
   public var body: some Reducer<State, Action> {
     BindingReducer()
     Reduce { state, action in
@@ -83,13 +84,13 @@ public struct Room {
         }
       case .alert:
         return .none
-        
+
       case .connect:
         switch state.connectivityState {
         case .connected, .connecting:
           state.connectivityState = .disconnected
           return .cancel(id: WebSocketClient.ID())
-          
+
         case .disconnected:
           state.connectivityState = .connecting
           let userId = state.user.id
@@ -130,11 +131,11 @@ public struct Room {
           }
           .cancellable(id: WebSocketClient.ID())
         }
-        
+
       case let .messageToSendAdded(message):
         state.messagesToSend.append(message)
         return .none
-        
+
       case let .receivedSocketMessage(.success(message)):
         if case let .data(data) = message,
           let messages = try? JSONDecoder()
@@ -188,13 +189,13 @@ public struct Room {
           TextState(
             """
             Could not send socket message.
-            Reason: \(error.localizedDescription). 
+            Reason: \(error.localizedDescription).
             Connect to the server first, and try again.
             """
           )
         }
         return .none
-        
+
       case .didSend(.success):
         state.isSending = false
         return .none
