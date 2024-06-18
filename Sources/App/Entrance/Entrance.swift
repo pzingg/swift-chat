@@ -1,17 +1,17 @@
-import GtkBackend
-import SwiftCrossUI
 // PFZ
 // import SwiftUI
 // import ComposableArchitecture
+import GtkBackend
+import SwiftCrossUI
 import API
+import Foundation
+import Dependencies
 
-@Reducer
-public struct Entrance: Reducer {
+public struct Entrance {
 
   @Dependency(\.client) var client
 
-  @ObservableState
-  public struct State {
+  public class State : Observable {
 
     enum Navigation: Equatable, Identifiable {
       enum SheetRoute: Equatable, Identifiable {
@@ -47,16 +47,23 @@ public struct Entrance: Reducer {
       }
     }
 
-    @Shared(.fileStorage(.user)) var user: UserPresentation?
+    // TODO
+    // @Shared(.fileStorage(.user))
+    var user: UserPresentation?
 
-    @Presents var room: Room.State?
+    // TODO
+    // @Presents
+    var room: Room.State?
 
-    var sheet: Entrance.State.Navigation.SheetRoute?
-    var query: String = ""
+    @Observed var sheet: Entrance.State.Navigation.SheetRoute?
+    @Observed var query: String = ""
     var rooms: [RoomPresentation] = []
     var isLoading: Bool = false
 
     public init() {}
+
+    public func send(_ action: Entrance.Action) -> Void {
+    }
   }
 
   public enum Action: BindableAction {
@@ -70,13 +77,16 @@ public struct Entrance: Reducer {
     case didCreateRoom(Result<RoomPresentation, Error>)
     case didCreateUser(Result<UserPresentation, any Error>)
     case didSearchRoom(Result<[RoomPresentation], any Error>)
-    case room(PresentationAction<Room.Action>)
+    // PFZ
+    // case room(PresentationAction<Room.Action>)
+    case room(Room.Action)
   }
 
   enum CancellationId: Hashable {
     case searchRoom
   }
 
+  /*
   public var body: some Reducer<State, Action> {
     BindingReducer()
     Reduce { state, action in
@@ -182,12 +192,17 @@ public struct Entrance: Reducer {
       Room()
     }
   }
+  */
 
   public init() {}
 }
 
 extension URL {
-  static let user = URL.documentsDirectory.appending(component: "user.json")
+  // PFZ
+  // static let user = URL.documentsDirectory.appending(component: "user.json")
+  static let user =
+    URL.init(fileURLWithPath: "/home/pzingg/Projects/swift/swift-chat")
+    .appendingPathComponent("user.json")
 }
 
 extension Entrance {

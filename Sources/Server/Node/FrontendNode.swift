@@ -18,14 +18,14 @@ import WebSocket
 /// Also, how do you load balance HBApplication? 🤔
 /// How does this work in other frameworks? 🤔
 distributed actor FrontendNode {
-  
+
   enum Error: Swift.Error {
     case noConnection
     case noDatabaseAvailable
     case environmentNotSet
   }
 
-  
+
   init(
     actorSystem: ClusterSystem
   ) async throws {
@@ -80,7 +80,7 @@ extension FrontendNode: Node {
       $0.installPlugins()
     }
     // We need references for ARC not to clean them up
-    let frontend = try await FrontendNode(
+    let _ = try await FrontendNode(
       actorSystem: frontendNode
     )
     try await frontendNode.terminated
@@ -95,13 +95,14 @@ extension FrontendNode {
   ) throws -> PostgresConnection.Configuration {
     guard let username = environment.get("DB_USERNAME"),
           let password = environment.get("DB_PASSWORD"),
-          let database = environment.get("DB_NAME") else {
+          let database = environment.get("DB_NAME"),
+          let port = Int(environment.get("DB_PORT") ?? "5432") else {
       throw Self.Error.environmentNotSet
     }
-    
+
     return PostgresConnection.Configuration(
       host: host,
-      port: 5432,
+      port: port,
       username: username,
       password: password,
       database: database,
@@ -126,7 +127,7 @@ struct RestApi: APIProtocol {
       }
     return .ok(.init(body: .json(rooms)))
   }
-  
+
   func createUser(_ input: API.Operations.createUser.Input) async throws -> API.Operations.createUser.Output {
     guard
       let name = switch input.body {
@@ -156,7 +157,7 @@ struct RestApi: APIProtocol {
       )
     )
   }
-  
+
   func createRoom(_ input: Operations.createRoom.Input) async throws -> Operations.createRoom.Output {
     guard
       let name = switch input.body {

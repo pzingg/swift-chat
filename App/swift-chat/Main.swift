@@ -6,14 +6,9 @@ import SwiftCrossUI
 import App
 
 @main
-struct Main: SwiftUI.App {
+struct Main: SwiftCrossUI.App {
 
-  let store: StoreOf<Entrance> = .init(
-    initialState: .init(),
-    reducer: {
-      Entrance()
-    }
-  )
+  let store: Entrance = Entrance.State()
 
   var body: some Scene {
     WindowGroup {

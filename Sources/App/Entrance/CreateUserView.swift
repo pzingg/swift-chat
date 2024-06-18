@@ -6,24 +6,25 @@ import SwiftCrossUI
 import Foundation
 
 // MARK: - Create room view
+
+class CreateUserViewState: Observable {
+  @Observed var name: String = ""
+}
+
 struct CreateUserView: View {
 
-  @State var name: String = ""
+  let state = CreateUserViewState()
   let create: (String) -> ()
 
   var body: some View {
     VStack {
-      TextField("Enter user name", text: $name)
-      Button(
-        action: {
-          create(name)
-        },
-        label: {
-          Text("Create")
-        }
-      ).disabled(name.count < 3)
+      TextField("Enter user name", state.$name)
+      Button("Create", action: {
+          create(state.name)
+      })
+      // .disabled(state.name.count < 3)
     }
-    .padding()
-    .interactiveDismissDisabled()
+    .padding(6)
+    // .interactiveDismissDisabled()
   }
 }

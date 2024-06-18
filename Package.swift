@@ -32,8 +32,10 @@ var package = Package(
     // PFZ
     // .package(url: "https://github.com/pointfreeco/swift-composable-architecture.git", from: "1.10.0"),
     .package(url: "https://github.com/pointfreeco/swift-dependencies.git", from: "1.3.0"),
+    .package(url: "https://github.com/pointfreeco/swift-case-paths.git", from: "1.4.0"),
     // SwiftCrossUI
-    .package(url: "https://github.com/pzingg/swift-cross-ui.git", branch: "main"),
+    .package(name: "swift-cross-ui", path: "../swift-cross-ui"),
+    // .package(url: "https://github.com/pzingg/swift-cross-ui.git", branch: "binding-subscripts"),
   ],
   targets: [
     .target(
@@ -53,6 +55,7 @@ var package = Package(
         // PFZ
         // .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
         .product(name: "Dependencies", package: "swift-dependencies"),
+        .product(name: "CasePaths", package: "swift-case-paths"),
         .product(name: "SwiftCrossUI", package: "swift-cross-ui"),
         .product(name: "GtkBackend", package: "swift-cross-ui"),
         "API",

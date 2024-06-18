@@ -1,21 +1,23 @@
-import Dependencies
 // PFZ
 // import ComposableArchitecture
+import GtkBackend
+import SwiftCrossUI
+import Dependencies
 import Foundation
 import API
 import WebSocket
 
-@Reducer
 public struct Room {
 
   @Dependency(\.continuousClock) var clock
   @Dependency(\.webSocket) var webSocket
 
-  @ObservableState
-  public struct State {
+  public class State : Observable {
 
-    var alert: AlertState<Action.Alert>?
-    var message: String = ""
+    // TODO
+    // var alert: AlertState<Action.Alert>?
+    var alert: String?
+    @Observed var message: String = ""
     var isSending: Bool = false
 
     let room: RoomPresentation
@@ -40,10 +42,12 @@ public struct Room {
       case disconnected
     }
 
+    // PFZ
+    // alert: AlertState<Action.Alert>? = nil,
     public init(
       user: UserPresentation,
       room: RoomPresentation,
-      alert: AlertState<Action.Alert>? = nil,
+      alert: String? = nil,
       connectivityState: ConnectivityState = ConnectivityState.disconnected,
       messagesToSend: [Message] = [],
       receivedMessages: [MessagePresentation] = []
@@ -55,6 +59,10 @@ public struct Room {
       self.messagesToSend = messagesToSend
       self.receivedMessages = receivedMessages
     }
+
+    public func send(_ action: Room.Action) -> Void {
+
+    }
   }
 
   public init() {}
@@ -62,7 +70,9 @@ public struct Room {
   public enum Action: BindableAction {
     case binding(BindingAction<State>)
     case onAppear
-    case alert(PresentationAction<Alert>)
+    // PFZ
+    // case alert(PresentationAction<Alert>)
+    case alert(Alert)
     case connect
     case messageToSendAdded(Message)
     case receivedSocketMessage(Result<WebSocketClient.Message, any Error>)
@@ -74,6 +84,7 @@ public struct Room {
     public enum Alert: Equatable {}
   }
 
+  /*
   public var body: some Reducer<State, Action> {
     BindingReducer()
     Reduce { state, action in
@@ -216,6 +227,8 @@ public struct Room {
     }
     .ifLet(\.alert, action: /Action.alert)
   }
+  */
+
 }
 
 extension MessagePresentation {
