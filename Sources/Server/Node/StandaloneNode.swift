@@ -7,7 +7,7 @@ enum StandaloneNode: Node {
   static func run(
     host: String,
     port: Int
-  ) async throws {    
+  ) async throws {
     let mainNode = await ClusterSystem("main") {
       $0.bindHost = host
       $0.bindPort = port
@@ -18,13 +18,13 @@ enum StandaloneNode: Node {
       $0.bindPort = port + 1
       $0.installPlugins()
     }
-    
+
     roomNode.cluster.join(node: mainNode.cluster.node)
-    
+
     try await Self.ensureCluster(mainNode, roomNode, within: .seconds(10))
-    
+
     // We need references for ARC not to clean them up
-    let frontend = try await FrontendNode(
+    let _ = try await FrontendNode(
       actorSystem: mainNode
     )
     try await mainNode.terminated

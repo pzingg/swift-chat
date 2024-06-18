@@ -180,6 +180,15 @@
       }
     },
     {
+      "identity" : "swift-cross-ui",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/pzingg/swift-cross-ui.git",
+      "state" : {
+        "branch" : "binding-subscripts",
+        "revision" : "381bf20ee9e13adc3b509e6a229e7ee83e466215"
+      }
+    },
+    {
       "identity" : "swift-crypto",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-crypto.git",

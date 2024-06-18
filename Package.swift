@@ -34,8 +34,8 @@ var package = Package(
     .package(url: "https://github.com/pointfreeco/swift-dependencies.git", from: "1.3.0"),
     .package(url: "https://github.com/pointfreeco/swift-case-paths.git", from: "1.4.0"),
     // SwiftCrossUI
-    .package(name: "swift-cross-ui", path: "../swift-cross-ui"),
-    // .package(url: "https://github.com/pzingg/swift-cross-ui.git", branch: "binding-subscripts"),
+    // .package(name: "swift-cross-ui", path: "../swift-cross-ui"),
+    .package(url: "https://github.com/pzingg/swift-cross-ui.git", branch: "binding-subscripts"),
   ],
   targets: [
     .target(
