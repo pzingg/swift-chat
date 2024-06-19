@@ -1,51 +1,52 @@
 // PFZ
 // import SwiftUI
-// import ComposableArchitecture
 import GtkBackend
 import SwiftCrossUI
 import API
 import Foundation
 import Dependencies
+import ComposableArchitecture
 
 public struct Entrance {
+
+  enum Navigation: Codable, Equatable, Identifiable {
+    case sheet(SheetRoute)
+    case popover(PopoverRoute)
+
+    var id: String {
+      switch self {
+      case .sheet(let route): "sheet_\(route.id)"
+      case .popover(let route): "popover_\(route.id)"
+      }
+    }
+  }
+
+  enum SheetRoute: Codable, Equatable, Identifiable {
+    case createUser
+    case createRoom
+
+    public var id: String {
+      switch self {
+      case .createUser: "createUser"
+      case .createRoom: "createRoom"
+      }
+    }
+  }
+
+  enum PopoverRoute: Codable, Equatable, Identifiable {
+    case error(String)
+
+    public var id: String {
+      switch self {
+      case .error(let description): description
+      }
+    }
+  }
 
   @Dependency(\.client) var client
 
   public class State : Observable {
 
-    enum Navigation: Equatable, Identifiable {
-      enum SheetRoute: Equatable, Identifiable {
-        case createUser
-        case createRoom
-
-        public var id: String {
-          switch self {
-          case .createUser: "createUser"
-          case .createRoom: "createRoom"
-          }
-        }
-      }
-
-      enum PopoverRoute: Equatable, Identifiable {
-        case error(String)
-
-        public var id: String {
-          switch self {
-          case .error(let description): description
-          }
-        }
-      }
-
-      case sheet(SheetRoute)
-      case popover(PopoverRoute)
-
-      var id: String {
-        switch self {
-        case .sheet(let route): "sheet_\(route.id)"
-        case .popover(let route): "popover_\(route.id)"
-        }
-      }
-    }
 
     // TODO
     // @Shared(.fileStorage(.user))
@@ -55,7 +56,8 @@ public struct Entrance {
     // @Presents
     var room: Room.State?
 
-    @Observed var sheet: Entrance.State.Navigation.SheetRoute?
+    @Observed var path = NavigationPath()
+    @Observed var sheet: Entrance.SheetRoute?
     @Observed var query: String = ""
     var rooms: [RoomPresentation] = []
     var isLoading: Bool = false

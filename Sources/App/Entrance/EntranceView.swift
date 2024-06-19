@@ -9,51 +9,55 @@ import Foundation
 
 public struct EntranceView: View {
   // @Bindable
-  var store: Entrance.State
+  public var state: Entrance.State
 
-  public init(store: Entrance.State) {
-    self.store = store
+  public init(state: Entrance.State) {
+    self.state = state
   }
 
   public var body: some View {
     ScrollView {
-      ForEach(store.rooms) { room in
+      ForEach(state.rooms) { room in
         RoomItemView(
           name: room.name,
           description: room.description
         ) {
-          store.send(.selectRoom(room))
+          state.send(.selectRoom(room))
         }
       }
       .padding(6)
     }
 
     /*
-    .searchable(text: store.$query)
-    if store.isLoading {
+    .searchable(text: state.$query)
+    if state.isLoading {
       ProgressView()
     }
-    .onAppear { store.send(.onAppear) }
+    .onAppear { state.send(.onAppear) }
     .sheet(
-      item: store.$sheet
-    ) { route in
+      item: state.$sheet
+    ) {
+      route in RouteView(...)
+    }
+    */
+
+    if let route = state.sheet {
       RouteView(
         route: route,
         send: { action in
           switch action {
           case .createUser(let name):
-            store.send(.createUser(name))
+            state.send(.createUser(name))
           case let .createRoom(name, description):
-            store.send(.createRoom(name, description))
+            state.send(.createRoom(name, description))
           }
         }
       )
     }
-    */
 
     Button("+", action: {
       // animation: .default
-      store.send(.openCreateRoom)
+      state.send(.openCreateRoom)
     })
     // .id("addRoomButton")
   }
@@ -71,7 +75,7 @@ struct RouteView: View {
     case createRoom(name: String, description: String?)
   }
 
-  let route: Entrance.State.Navigation.SheetRoute
+  let route: Entrance.SheetRoute
   let send: (Action) -> ()
 
   var body: some View {

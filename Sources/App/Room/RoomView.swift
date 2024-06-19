@@ -8,21 +8,20 @@ import Foundation
 // MARK: - Feature view
 
 public struct RoomView: View {
-
   // @Bindable
-  var store: Room.State
+  public var state: Room.State
 
-  public init(store: Room.State) {
-    self.store = store
+  public init(state: Room.State) {
+    self.state = state
   }
 
   public var body: some View {
     VStack(spacing: 0) {
       ScrollView {
-        // ForEach(Array(store.receivedMessages.enumerated()), id: \.0) { (index, response) in
+        // ForEach(Array(state.receivedMessages.enumerated()), id: \.0) { (index, response) in
         ForEach(
           Array(
-            store.receivedMessages.enumerated()
+            state.receivedMessages.enumerated()
           )
           //, id: \.0
         ) { (_, response) in
@@ -33,7 +32,7 @@ public struct RoomView: View {
             Text("\(response.user.name) disconnected. 💤😴")
           case .leave:
             Text("\(response.user.name) left the chat. 👋🥲")
-          case .message(let message, _) where response.user == store.user:
+          case .message(let message, _) where response.user == state.user:
             UserMessage(message: message)
           case .message(let message, _):
             OtherUsersMessage(name: response.user.name, message: message)
@@ -42,8 +41,8 @@ public struct RoomView: View {
         ForEach(
           Array(
             zip(
-              store.messagesToSendTexts.indices,
-              store.messagesToSendTexts
+              state.messagesToSendTexts.indices,
+              state.messagesToSendTexts
             )
           )
           //, id: \.0
@@ -52,11 +51,11 @@ public struct RoomView: View {
         }
         .padding(6)
         /*
-        .onChange(of: store.receivedMessages) { oldValue, messages in
+        .onChange(of: state.receivedMessages) { oldValue, messages in
           guard let last = messages.last else { return }
           // reader.scrollTo(last.id, anchor: .top)
         }
-        .onChange(of: store.messagesToSend) { oldValue, messages in
+        .onChange(of: state.messagesToSend) { oldValue, messages in
           guard !messages.isEmpty else { return }
           // reader.scrollTo(messages.count - 1, anchor: .top)
         }
@@ -64,13 +63,13 @@ public struct RoomView: View {
       }
       Spacer() // Divider()
       MessageField(
-        message: store.$message,
-        isSending: store.isSending,
-        send: { store.send(.sendButtonTapped) }
+        message: state.$message,
+        isSending: state.isSending,
+        send: { state.send(.sendButtonTapped) }
       )
     }
-    // .onAppear { store.send(.onAppear) }
-    // .navigationTitle(store.room.name)
+    // .onAppear { state.send(.onAppear) }
+    // .navigationTitle(state.room.name)
   }
 }
 

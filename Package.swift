@@ -4,6 +4,7 @@
 // or swift-perception packages
 
 import PackageDescription
+import CompilerPluginSupport
 
 var package = Package(
   name: "swift-chat",
@@ -33,11 +34,27 @@ var package = Package(
     // .package(url: "https://github.com/pointfreeco/swift-composable-architecture.git", from: "1.10.0"),
     .package(url: "https://github.com/pointfreeco/swift-dependencies.git", from: "1.3.0"),
     .package(url: "https://github.com/pointfreeco/swift-case-paths.git", from: "1.4.0"),
+    // For macros
+    .package(url: "https://github.com/apple/swift-syntax.git", from: "510.0.0"),
     // SwiftCrossUI
     // .package(name: "swift-cross-ui", path: "../swift-cross-ui"),
     .package(url: "https://github.com/pzingg/swift-cross-ui.git", branch: "binding-subscripts"),
+    // OpenCombine
+    .package(url: "https://github.com/OpenCombine/OpenCombine.git", from: "0.14.0")
   ],
   targets: [
+    .macro(
+      name: "ComposableArchitectureMacros",
+      dependencies: [
+        .product(name: "SwiftSyntax", package: "swift-syntax"),
+        .product(name: "SwiftDiagnostics", package: "swift-syntax"),
+        .product(name: "SwiftOperators", package: "swift-syntax"),
+        .product(name: "SwiftSyntaxBuilder", package: "swift-syntax"),
+        .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
+        .product(name: "SwiftSyntaxMacroExpansion", package: "swift-syntax"),
+        .product(name: "SwiftCompilerPlugin", package: "swift-syntax"),
+      ]
+    ),
     .target(
       name: "API",
       dependencies: [
@@ -53,11 +70,10 @@ var package = Package(
       name: "App",
       dependencies: [
         // PFZ
-        // .product(name: "ComposableArchitecture", package: "swift-composable-architecture"),
         .product(name: "Dependencies", package: "swift-dependencies"),
-        .product(name: "CasePaths", package: "swift-case-paths"),
         .product(name: "SwiftCrossUI", package: "swift-cross-ui"),
         .product(name: "GtkBackend", package: "swift-cross-ui"),
+        "ComposableArchitecture",
         "API",
         "WebSocket",
       ]
@@ -104,6 +120,17 @@ var package = Package(
         .product(name: "Hummingbird", package: "hummingbird"),
         .product(name: "HummingbirdRouter", package: "hummingbird"),
         .product(name: "HummingbirdWebSocket", package: "hummingbird-websocket")
+      ]
+    ),
+    .target(
+      name: "ComposableArchitecture",
+      dependencies: [
+        .product(name: "CasePaths", package: "swift-case-paths"),
+        .product(name: "SwiftCrossUI", package: "swift-cross-ui"),
+        .product(name: "OpenCombine", package: "OpenCombine"),
+        .product(name: "OpenCombineFoundation", package: "OpenCombine"),
+        .product(name: "OpenCombineDispatch", package: "OpenCombine"),
+        "ComposableArchitectureMacros",
       ]
     ),
     .executableTarget(
